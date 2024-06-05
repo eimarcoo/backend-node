@@ -23,13 +23,13 @@ router.get('/users/edit/:id', UsersController.edit)
 router.post('/users/update', UsersController.update)
 router.post('/users/update-status/:id', UsersController.updateStatus)
 
-router.get('/agendas', AgendasController.list);
-router.get('/agendas/create', AgendasController.create);
-router.post('/agendas', AgendasController.save);
-router.get('/agendas/:id', AgendasController.remove);
-router.get('/agendas/:id/edit', AgendasController.edit);
-router.put('/agendas/:id', AgendasController.update);
-router.delete('/agendas/:id', AgendasController.updateStatus);
+router.get('/agenda', AgendasController.list);
+router.get('/agenda/create', AgendasController.create);
+router.post('/agenda', AgendasController.save);
+router.get('/agenda/:id', AgendasController.remove);
+router.get('/agenda/:id/edit', AgendasController.edit);
+router.put('/agenda/:id', AgendasController.update);
+router.delete('/agenda/:id', AgendasController.updateStatus);
 
 router.get('/', NavegacaoController.index);
 router.get('/sobre', NavegacaoController.sobre);

@@ -1,46 +1,46 @@
-const Task = require('../models/Task');
-const tasksRepository = require("../repositories/TasksRepository");
+const Agendas = require('../models/agenda');
+const AgendasController = require("../repositories/AgendasRepository");
 
-function TaskController() {
+function AgendasControllerr() {
 
   async function list(req, res) {
-    const tasks = await tasksRepository.list();
+    const agendas = await AgendasRepository.list();
 
-    res.render('tasks/list', { 
-      title: "Lista de Tarefas",
-      tasks: tasks
+    res.render('agenda/list', { 
+      title: "Lista de Contatos",
+      agendas: agendas
     })
   }
 
   function create(req, res) {
-    res.render('tasks/create')
+    res.render('agenda/create')
   }
 
   async function save(req, res) {
-    await tasksRepository.save(req.body);
-    res.redirect('/tasks');
+    await AgendasRepository.save(req.body);
+    res.redirect('/agenda');
   }
 
   async function remove(req, res) {
-    await tasksRepository.remove(req.params.id);
-    res.redirect('/tasks')
+    await AgendasRepository.remove(req.params.id);
+    res.redirect('/agenda')
   }
 
   async function edit(req, res) {
-    const task = await tasksRepository.find(req.params.id);
-    res.render('tasks/edit', { task: task })
+    const task = await AgendasRepository.find(req.params.id);
+    res.render('agenda/edit', { task: task })
   }
 
   async function update(req, res) {
-    await tasksRepository.update(req.body.id, req.body);
-    res.redirect('/tasks');
+    await AgendasRepository.update(req.body.id, req.body);
+    res.redirect('/agenda');
   }
 
   async function updateStatus(req, res) {
     const done = req.body.done === '0' ? true : false;
 
-    await tasksRepository.updateStatus(req.params.id, done);
-    res.redirect('/tasks');
+    await AgendasRepository.updateStatus(req.params.id, done);
+    res.redirect('/agenda');
   }
 
   return {
@@ -55,4 +55,4 @@ function TaskController() {
 
 }
 
-module.exports = TaskController();
+module.exports = AgendasController;
