@@ -7,7 +7,7 @@ function TaskController() {
     const tasks = await tasksRepository.list();
 
     res.render('tasks/list', { 
-      title: "Lista de Tarefas",
+      title: "Lista de Contatos",
       tasks: tasks
     })
   }
