@@ -1,46 +1,46 @@
-const Agendas = require('../models/agenda');
-const AgendasController = require("../repositories/AgendasRepository");
+const Task = require('../models/Task');
+const tasksRepository = require("../repositories/TasksRepository");
 
-function AgendasControllerr() {
+function TaskController() {
 
   async function list(req, res) {
-    const agendas = await AgendasRepository.list();
+    const tasks = await tasksRepository.list();
 
-    res.render('agenda/list', { 
-      title: "Lista de Contatos",
-      agendas: agendas
+    res.render('tasks/list', { 
+      title: "Lista de Tarefas",
+      tasks: tasks
     })
   }
 
   function create(req, res) {
-    res.render('agenda/create')
+    res.render('tasks/create')
   }
 
   async function save(req, res) {
-    await AgendasRepository.save(req.body);
-    res.redirect('/agenda');
+    await tasksRepository.save(req.body);
+    res.redirect('/tasks');
   }
 
   async function remove(req, res) {
-    await AgendasRepository.remove(req.params.id);
-    res.redirect('/agenda')
+    await tasksRepository.remove(req.params.id);
+    res.redirect('/tasks')
   }
 
   async function edit(req, res) {
-    const task = await AgendasRepository.find(req.params.id);
-    res.render('agenda/edit', { task: task })
+    const task = await tasksRepository.find(req.params.id);
+    res.render('tasks/edit', { task: task })
   }
 
   async function update(req, res) {
-    await AgendasRepository.update(req.body.id, req.body);
-    res.redirect('/agenda');
+    await tasksRepository.update(req.body.id, req.body);
+    res.redirect('/tasks');
   }
 
   async function updateStatus(req, res) {
     const done = req.body.done === '0' ? true : false;
 
-    await AgendasRepository.updateStatus(req.params.id, done);
-    res.redirect('/agenda');
+    await tasksRepository.updateStatus(req.params.id, done);
+    res.redirect('/tasks');
   }
 
   return {
@@ -55,4 +55,4 @@ function AgendasControllerr() {
 
 }
 
-module.exports = AgendasController;
+module.exports = TaskController();

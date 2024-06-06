@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../core/sequelize');
+const db = require('../db');
 
-const Agenda = sequelize.define('Agenda', {
+const Agenda = db.define('Agenda', {
   nome: {
     type: DataTypes.STRING(255),
     allowNull: false,
