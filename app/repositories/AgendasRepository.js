@@ -1,115 +1,61 @@
 const Agenda = require('../models/Agenda');
 
-class AgendasController {
-  async index(req, res) {
-    const agendas = await Agenda.findAll();
-    res.render('agendas/index', { agendas });
+function AgendasController() {
+
+  async function list() {
+    const agendas = await Agenda.findAll({ raw: true });
+    return agendas;
   }
 
-  async create(req, res) {
-    res.render('agendas/create');
-  }
-
-  async store(req, res) {
-    const {
-      nome,
-      celular,
-      email,
-      rua,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      cep,
-      complemento,
-    } = req.body;
-
-    const agenda = await Agenda.create({
-      nome,
-      celular,
-      email,
-      rua,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      cep,
-      complemento,
-    });
-
-    res.redirect('/agendas');
-  }
-
-  async show(req, res) {
-    const { id } = req.params;
+  async function find(id) {
     const agenda = await Agenda.findByPk(id);
+    return agenda;
+  }
 
-    if (!agenda) {
-      return res.status(404).send('Agenda não encontrada');
+  async function save(dados) {
+    const agenda = {
+      title: dados.title,
+      description: dados.description,
+      done: false,
     }
 
-    res.render('agendas/show', { agenda });
+    const contato_created = await Agenda.create(agenda);
+    return contato_created;
   }
 
-  async edit(req, res) {
-    const { id } = req.params;
-    const agenda = await Agenda.findByPk(id);
-
-    if (!agenda) {
-      return res.status(404).send('Agenda não encontrada');
+  async function update(id, dados) {
+    const agenda = {
+      title: dados.title,
+      description: dados.description,
+      done: dados.done === '1' ? true : false
     }
 
-    res.render('agendas/edit', { agenda });
+    const contato_updated = await Agenda.update(agenda, { where: { id: id } });
+    return contato_updated;
   }
 
-  async update(req, res) {
-    const { id } = req.params;
-    const {
-      nome,
-      celular,
-      email,
-      rua,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      cep,
-      complemento,
-    } = req.body;
+  async function remove(id) {
+    await Agenda.destroy({ where: { id: id } });
+  }
 
-    const agenda = await Agenda.findByPk(id);
-
-    if (!agenda) {
-      return res.status(404).send('Agenda não encontrada');
+  function updateStatus(id, status) {
+    const agenda = {
+      done: status,
     }
 
-    await agenda.update({
-      nome,
-      celular,
-      email,
-      rua,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      cep,
-      complemento,
-    });
-
-    res.redirect('/agendas/${id}');
+ 	  const agenda_updated = Agenda.update(agenda, { where: { id: id } });
+    return agenda_updated;
   }
 
-  async destroy(req, res) {
-    const { id } = req.params;
-    const agenda = await Agenda.findByPk(id);
-
-    if (!agenda) {
-      return res.status(404).send('Agenda não encontrada');
-    }
-
-    await agenda.destroy();
-    res.redirect('/agendas');
+  return {
+    list,
+    find,
+    save,
+    remove,
+    update,
+    updateStatus,
   }
+  
 }
 
 module.exports = new AgendasController();

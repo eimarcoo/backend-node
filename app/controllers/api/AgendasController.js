@@ -1,29 +1,29 @@
-const tasksRepository = require("../../repositories/AgendasRepository");
+const agendasRepository = require("../../repositories/AgendasRepository");
 
 function AgendasController() {
 
   async function list(req, res) {
-    const tasks = await tasksRepository.list();
-    res.status(200).json(tasks);
+    const agenda = await agendasRepository.list();
+    res.status(200).json(agenda);
   }
 
   async function show(req, res) {
 
     try {
 
-      const task = await tasksRepository.find(req.params.id);
+      const agenda = await agendasRepository.find(req.params.id);
 
-      if (!task) {
+      if (!agenda) {
         return res.status(404).send({
-          message: "Tarefa não encontrada."
+          message: "Contato não encontrada."
         })
       }
 
-      res.status(200).json(task);
+      res.status(200).json(agenda);
 
     } catch (error) {
       res.status(500).json({
-        message: "Task não encontrada"
+        message: "Contato não encontrada"
       });
     }
     
@@ -31,8 +31,8 @@ function AgendasController() {
 
   async function save(req, res) {
     try {
-      const task = await tasksRepository.save(req.body);
-      res.status(201).json(task);
+      const agenda = await agendasRepository.save(req.body);
+      res.status(201).json(agenda);
 
     } catch (error) {
       res.status(400).json(error.details)
@@ -40,51 +40,51 @@ function AgendasController() {
   }
 
   async function update(req, res) {
-    const task = await tasksRepository.find(req.params.id);
+    const agenda = await agendasRepository.find(req.params.id);
 
-    if (!task) {
+    if (!agenda) {
       return res.status(404).send({
         message: "Contato não encontrada."
       })
     }
 
-    await tasksRepository.update(req.params.id, req.body);
+    await agendasRepository.update(req.params.id, req.body);
 
     res.json({
-      message: "Tarefa atualizada."
+      message: "Contato atualizada."
     })
   }
 
   async function remove(req, res) {
-    const task = await tasksRepository.find(req.params.id);
+    const agenda = await agendasRepository.find(req.params.id);
 
-    if (!task) {
+    if (!agenda) {
       return res.status(404).send({
-        message: "Tarefa não encontrada."
+        message: "Contato não encontrada."
       })
     }
 
-    await tasksRepository.remove(req.params.id);
+    await agendasRepository.remove(req.params.id);
 
     res.status(200).json({
-      message: "Tarefa removida."
+      message: "Contato removida."
     })
     
   }
 
   async function updateStatus(req, res) {
-    const task = await tasksRepository.find(req.params.id);
+    const agenda = await agendasRepository.find(req.params.id);
 
-    if (!task) {
+    if (!agenda) {
       return res.status(404).send({
-        message: "Tarefa não encontrada."
+        message: "Contato não encontrada."
       })
     }
 
-    await tasksRepository.updateStatus(req.params.id, req.body.done);
+    await agendasRepository.updateStatus(req.params.id, req.body.done);
 
     res.json({
-      message: "Status da Tarefa atualizado."
+      message: "Status do contato atualizado."
     })
 
   }
@@ -100,4 +100,4 @@ function AgendasController() {
 
 }
 
-module.exports = TaskController();
+module.exports = AgendasController();

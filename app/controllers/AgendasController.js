@@ -1,46 +1,46 @@
-const Task = require('../models/Task');
-const tasksRepository = require("../repositories/TasksRepository");
+const Agendas = require('../models/Agenda');
+const agendasRepository = require("../repositories/AgendasRepository");
 
-function TaskController() {
+function agendasController() {
 
   async function list(req, res) {
-    const tasks = await tasksRepository.list();
+    const agendas = await agendasRepository.list();
 
-    res.render('tasks/list', { 
-      title: "Lista de Tarefas",
-      tasks: tasks
+    res.render('agendas/list', { 
+      title: "Lista de Contatos",
+      agendas: agendas
     })
   }
 
   function create(req, res) {
-    res.render('tasks/create')
+    res.render('agendas/create')
   }
 
   async function save(req, res) {
-    await tasksRepository.save(req.body);
-    res.redirect('/tasks');
+    await agendasRepository.save(req.body);
+    res.redirect('/agendas');
   }
 
   async function remove(req, res) {
-    await tasksRepository.remove(req.params.id);
-    res.redirect('/tasks')
+    await agendasRepository.remove(req.params.id);
+    res.redirect('/agendas')
   }
 
   async function edit(req, res) {
-    const task = await tasksRepository.find(req.params.id);
-    res.render('tasks/edit', { task: task })
+    const agendas = await agendasRepository.find(req.params.id);
+    res.render('agendas/edit', { agendas: agendas })
   }
 
   async function update(req, res) {
-    await tasksRepository.update(req.body.id, req.body);
-    res.redirect('/tasks');
+    await agendasRepository.update(req.body.id, req.body);
+    res.redirect('/agendas');
   }
 
   async function updateStatus(req, res) {
     const done = req.body.done === '0' ? true : false;
 
-    await tasksRepository.updateStatus(req.params.id, done);
-    res.redirect('/tasks');
+    await agendasRepository.updateStatus(req.params.id, done);
+    res.redirect('/agendas');
   }
 
   return {
@@ -55,4 +55,4 @@ function TaskController() {
 
 }
 
-module.exports = TaskController();
+module.exports = agendasController();
