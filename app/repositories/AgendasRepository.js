@@ -14,17 +14,16 @@ function AgendasController() {
 
   async function save(dados) {
     const agenda = {
-      nome: nome.dados,
-      celular: celular.dados,
-      email: email.dados,
-      rua: rua.dados,
-      numero: numero.dados,
-      bairro: bairro.dados,
-      cidade: cidade.dados,
-      estado: estado.dados,
-      cep: cep.dados,
-      complemento: complemento.dados,
-      done: false,
+      nome: dados.nome,
+      celular: dados.celular,
+      email: dados.email,
+      rua: dados.rua,
+      numero: dados.numero,
+      bairro: dados.bairro,
+      cidade: dados.cidade,
+      estado: dados.estado,
+      cep: dados.cep,
+      complemento: dados.complemento,
     }
 
     const contato_created = await Agenda.create(agenda);
@@ -33,17 +32,16 @@ function AgendasController() {
 
   async function update(id, dados) {
     const agenda = {
-      nome: nome.dados,
-      celular: celular.dados,
-      email: email.dados,
-      rua: rua.dados,
-      numero: numero.dados,
-      bairro: bairro.dados,
-      cidade: cidade.dados,
-      estado: estado.dados,
-      cep: cep.dados,
-      complemento: complemento.dados,
-      done: dados.done === '1' ? true : false
+      nome: dados.nome,
+      celular: dados.celular,
+      email: dados.email,
+      rua: dados.rua,
+      numero: dados.numero,
+      bairro: dados.bairro,
+      cidade: dados.cidade,
+      estado: dados.estado,
+      cep: dados.cep,
+      complemento: dados.complemento,
     }
 
     const contato_updated = await Agenda.update(agenda, { where: { id: id } });

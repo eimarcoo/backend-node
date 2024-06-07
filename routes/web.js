@@ -25,10 +25,10 @@ router.post('/users/update-status/:id', UsersController.updateStatus)
 
 router.get('/agendas', AgendasController.list);
 router.get('/agendas/create', AgendasController.create);
-router.post('/agendas', AgendasController.save);
+router.post('/agendas/save', AgendasController.save);
 router.post('/agendas/:id', AgendasController.remove);
-router.get('/agendas/:id/edit', AgendasController.edit);
-router.post('/agendas/:id', AgendasController.update);
+router.get('/agendas/edit/:id', AgendasController.edit);
+router.post('/agendas/update', AgendasController.update);
 router.post('/agendas/:id', AgendasController.updateStatus);
 
 router.get('/', NavegacaoController.index);
