@@ -14,8 +14,16 @@ function AgendasController() {
 
   async function save(dados) {
     const agenda = {
-      title: dados.title,
-      description: dados.description,
+      nome: nome.dados,
+      celular: celular.dados,
+      email: email.dados,
+      rua: rua.dados,
+      numero: numero.dados,
+      bairro: bairro.dados,
+      cidade: cidade.dados,
+      estado: estado.dados,
+      cep: cep.dados,
+      complemento: complemento.dados,
       done: false,
     }
 
@@ -25,8 +33,16 @@ function AgendasController() {
 
   async function update(id, dados) {
     const agenda = {
-      title: dados.title,
-      description: dados.description,
+      nome: nome.dados,
+      celular: celular.dados,
+      email: email.dados,
+      rua: rua.dados,
+      numero: numero.dados,
+      bairro: bairro.dados,
+      cidade: cidade.dados,
+      estado: estado.dados,
+      cep: cep.dados,
+      complemento: complemento.dados,
       done: dados.done === '1' ? true : false
     }
 
