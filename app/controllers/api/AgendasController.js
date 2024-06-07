@@ -1,100 +1,103 @@
-const Agenda= require("../../repositories/AgendasController");
+const tasksRepository = require("../../repositories/AgendasRepository");
 
-class AgendasController {
-  async index(req, res) {
-    const agendas = await Agenda.findAll();
-    res.json(agendas);
+function AgendasController() {
+
+  async function list(req, res) {
+    const tasks = await tasksRepository.list();
+    res.status(200).json(tasks);
   }
 
-  async store(req, res) {
-    const {
-      nome,
-      celular,
-      email,
-      rua,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      cep,
-      complemento,
-    } = req.body;
+  async function show(req, res) {
 
-    const agenda = await Agenda.create({
-      nome,
-      celular,
-      email,
-      rua,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      cep,
-      complemento,
-    });
+    try {
 
-    res.status(201).json(agenda);
+      const task = await tasksRepository.find(req.params.id);
+
+      if (!task) {
+        return res.status(404).send({
+          message: "Tarefa não encontrada."
+        })
+      }
+
+      res.status(200).json(task);
+
+    } catch (error) {
+      res.status(500).json({
+        message: "Task não encontrada"
+      });
+    }
+    
   }
 
-  async show(req, res) {
-    const { id } = req.params;
-    const agenda = await Agenda.findByPk(id);
+  async function save(req, res) {
+    try {
+      const task = await tasksRepository.save(req.body);
+      res.status(201).json(task);
 
-    if (!agenda) {
-      return res.status(404).json({ message: 'Agenda não encontrada' });
+    } catch (error) {
+      res.status(400).json(error.details)
+    }
+  }
+
+  async function update(req, res) {
+    const task = await tasksRepository.find(req.params.id);
+
+    if (!task) {
+      return res.status(404).send({
+        message: "Contato não encontrada."
+      })
     }
 
-    res.json(agenda);
+    await tasksRepository.update(req.params.id, req.body);
+
+    res.json({
+      message: "Tarefa atualizada."
+    })
   }
 
-  async update(req, res) {
-    const { id } = req.params;
-    const {
-      nome,
-      celular,
-      email,
-      rua,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      cep,
-      complemento,
-    } = req.body;
+  async function remove(req, res) {
+    const task = await tasksRepository.find(req.params.id);
 
-    const agenda = await Agenda.findByPk(id);
-
-    if (!agenda) {
-      return res.status(404).json({ message: 'Agenda não encontrada' });
+    if (!task) {
+      return res.status(404).send({
+        message: "Tarefa não encontrada."
+      })
     }
 
-    await agenda.update({
-      nome,
-      celular,
-      email,
-      rua,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      cep,
-      complemento,
-    });
+    await tasksRepository.remove(req.params.id);
 
-    res.json(agenda);
+    res.status(200).json({
+      message: "Tarefa removida."
+    })
+    
   }
 
-  async destroy(req, res) {
-    const { id } = req.params;
-    const agenda = await Agenda.findByPk(id);
+  async function updateStatus(req, res) {
+    const task = await tasksRepository.find(req.params.id);
 
-    if (!agenda) {
-      return res.status(404).json({ message: 'Agenda não encontrada' });
+    if (!task) {
+      return res.status(404).send({
+        message: "Tarefa não encontrada."
+      })
     }
 
-    await agenda.destroy();
-    res.status(204).send();
+    await tasksRepository.updateStatus(req.params.id, req.body.done);
+
+    res.json({
+      message: "Status da Tarefa atualizado."
+    })
+
   }
+
+  return {
+    save,
+    list,
+    show,
+    remove,
+    update,
+    updateStatus,
+  }
+
 }
 
-module.exports = new AgendasController();
+module.exports = TaskController();

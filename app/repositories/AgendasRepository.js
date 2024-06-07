@@ -1,4 +1,4 @@
-const Agenda = require('../models/agenda');
+const Agenda = require('../models/Agenda');
 
 class AgendasController {
   async index(req, res) {
