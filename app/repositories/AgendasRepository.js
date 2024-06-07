@@ -1,6 +1,6 @@
 const Agenda = require('../models/Agenda');
 
-function AgendasController() {
+function AgendasRepository() {
 
   async function list() {
     const agendas = await Agenda.findAll({ raw: true });
@@ -72,4 +72,4 @@ function AgendasController() {
   
 }
 
-module.exports = new AgendasController();
+module.exports = new AgendasRepository();
