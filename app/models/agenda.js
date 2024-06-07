@@ -1,6 +1,10 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../core/sequelize');
 
+const table_options = {
+  tableName: 'agenda'
+};
+
 const Agenda = sequelize.define('Agenda', {
   nome: {
     type: DataTypes.STRING(255),
